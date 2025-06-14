@@ -1,2 +1,12 @@
 /.gitattributes export-ignore
 /.github export-ignore
+# Atur semua file PHP, JS, CSS, HTML supaya commit dengan LF (standar Linux/server)
+*.php text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+
+# (Opsional) tambahkan untuk file konfigurasi
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lfs
