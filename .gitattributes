@@ -9,4 +9,4 @@
 # (Opsional) tambahkan untuk file konfigurasi
 *.yml text eol=lf
 *.json text eol=lf
-*.md text eol=lfs
+*.md text eol=lf
