@@ -17,8 +17,9 @@
         <!-- End keranjang Nav -->
 
         <?php
-        if (session()->get('role') == 'admin') {
-        ?>
+        if (session()->get('role') == 'admin') 
+        {
+            ?>
         <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == 'produk') ? "" : "collapsed" ?>" href="produk">
                 <i class="bi bi-receipt"></i>
@@ -30,6 +31,22 @@
         ?>
         <!-- End produk Nav -->
 
+        <!-- Diskon -->
+        <?php
+        if (session()->get('role') == 'admin') 
+        {
+            ?>
+        <li class="nav-item">
+            <a class="nav-link <?php echo (uri_string() == 'diskon') ? "" : "collapsed" ?>" href="diskon">
+                <i class="bi bi-percent"></i>
+                <span>Diskon</span>
+            </a>
+        </li>
+        <?php
+        }
+        ?>
+
+        <!-- end Diskon -->
         <!-- Product Category  -->
 
         <li class="nav-item">

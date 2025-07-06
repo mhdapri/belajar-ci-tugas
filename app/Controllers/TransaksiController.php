@@ -39,12 +39,27 @@ class TransaksiController extends BaseController
 
     public function cart_add()
     {
+        $harga = $this->request->getPost('harga');
+        $diskon = session()->get('diskon');
+        $nominalDiskon = 0;
+
+        if ($diskon && $diskon['tanggal'] === date('Y-m-d')) {
+            $nominalDiskon = $diskon['nominal'];
+        }
+
+        $hargaSetelahDiskon = max(0, $harga - $nominalDiskon);
+        
         $this->cart->insert(array(
             'id'        => $this->request->getPost('id'),
             'qty'       => 1,
-            'price'     => $this->request->getPost('harga'),
+            // 'price'     => $this->request->getPost('harga'),
+            'price'     => $hargaSetelahDiskon,
             'name'      => $this->request->getPost('nama'),
-            'options'   => array('foto' => $this->request->getPost('foto'))
+            'options'   => array(
+                'foto' => $this->request->getPost('foto'),
+                'harga_asli' => $harga,
+                'diskon' => $nominalDiskon
+                )
         ));
         session()->setflashdata('success', 'Produk berhasil ditambahkan ke keranjang. (<a href="' . base_url() . 'keranjang">Lihat</a>)');
         return redirect()->to(base_url('/'));
@@ -151,7 +166,7 @@ public function getCost()
                 'total_harga' => $this->request->getPost('total_harga'),
                 'alamat' => $this->request->getPost('alamat'),
                 'ongkir' => $this->request->getPost('ongkir'),
-                'status' => 0,
+                'status' => 1,
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s")
             ];
@@ -165,7 +180,7 @@ public function getCost()
                     'transaction_id' => $last_insert_id,
                     'product_id' => $value['id'],
                     'jumlah' => $value['qty'],
-                    'diskon' => 0,
+                    'diskon' => $value['options']['diskon'] ?? 0,
                     'subtotal_harga' => $value['qty'] * $value['price'],
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")

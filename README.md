@@ -1,6 +1,8 @@
 # Toko Online CodeIgniter 4
 
-Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4](https://codeigniter.com/). Sistem ini menyediakan beberapa fungsionalitas untuk toko online, termasuk manajemen produk, keranjang belanja, dan sistem transaksi.
+Proyek ini adalah platform toko online berbasis web yang dibangun menggunakan framework **CodeIgniter 4**, dilengkapi dengan integrasi **NiceAdmin template** untuk tampilan UI yang profesional dan responsif. Sistem mendukung fungsi e-commerce dasar seperti katalog produk, keranjang belanja, checkout dengan ongkos kirim otomatis (API RajaOngkir), serta manajemen produk melalui panel admin.
+
+---
 
 ## Daftar Isi
 
@@ -9,32 +11,81 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
 - [Instalasi](#instalasi)
 - [Struktur Proyek](#struktur-proyek)
 
+---
+
 ## Fitur
 
-- Katalog Produk
-  - Tampilan produk dengan gambar
-  - Pencarian produk
-- Keranjang Belanja
-  - Tambah/hapus produk
-  - Update jumlah produk
-- Sistem Transaksi
-  - Proses checkout
-  - Riwayat transaksi
-- Panel Admin
-  - Manajemen produk (CRUD)
-  - Manajemen kategori
-  - Laporan transaksi
-  - Export data ke PDF
-- Sistem Autentikasi
-  - Login/Register pengguna
-  - Manajemen akun
-- UI Responsif dengan NiceAdmin template
+### 🎯 Katalog Produk
+
+- Menampilkan daftar produk lengkap dengan:
+  - Gambar
+  - Nama produk
+  - Harga asli dan harga setelah diskon (jika tersedia)
+- Fitur pencarian nama produk
+- Kategori produk untuk memfilter berdasarkan jenis
+- Detail produk individual
+
+### 🛒 Keranjang Belanja
+
+- Tambahkan produk ke keranjang dari katalog
+- Simpan dan tampilkan:
+  - Foto produk
+  - Harga asli
+  - Diskon aktif (berbasis tanggal)
+  - Harga setelah diskon
+  - Jumlah item yang bisa disesuaikan
+- Edit atau hapus item di keranjang
+- Informasi subtotal dan total harga
+
+### 💳 Sistem Checkout dan Transaksi
+
+- Halaman checkout dengan isian:
+  - Nama pengguna (otomatis dari sesi login)
+  - Alamat lengkap
+  - Kelurahan tujuan (menggunakan Select2 + API RajaOngkir)
+  - Pilih layanan ekspedisi dan estimasi ongkir
+- Hitung total transaksi secara dinamis (harga + ongkir)
+- Simpan data transaksi ke database
+- Simpan detail produk yang dibeli (termasuk qty, diskon, subtotal)
+
+### 📦 Riwayat Transaksi
+
+- Menampilkan semua transaksi pengguna (fitur tambahan)
+
+### ⚙️ Panel Admin
+
+- Login khusus untuk admin
+- Manajemen Produk:
+  - CRUD produk dengan gambar, harga, dan kategori
+- Manajemen Diskon:
+  - Tambah diskon harian berbasis tanggal
+- Manajemen Kategori:
+  - Tambah/hapus/edit kategori produk
+- Laporan Transaksi:
+  - Tampilkan semua transaksi yang masuk
+  - Filter laporan dan **export ke PDF**
+
+### 🔐 Sistem Autentikasi
+
+- Login dan Register pengguna
+- Hak akses berdasarkan peran (user dan admin)
+- Logout dan session manajemen
+
+### 💅 Tampilan Responsif
+
+- Menggunakan [NiceAdmin Bootstrap Template](https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/) yang modern dan mobile-friendly
+
+---
 
 ## Persyaratan Sistem
 
 - PHP >= 8.2
 - Composer
-- Web server (XAMPP)
+- Web server (XAMPP atau Laravel Valet)
+- MySQL / MariaDB
+- Koneksi Internet (untuk akses API RajaOngkir)
+
+---
 
 ## Instalasi
 
@@ -43,47 +94,3 @@ Proyek ini adalah platform toko online yang dibangun menggunakan [CodeIgniter 4]
    git clone [URL repository]
    cd belajar-ci-tugas
    ```
-2. **Install dependensi**
-   ```bash
-   composer install
-   ```
-3. **Konfigurasi database**
-
-   - Start module Apache dan MySQL pada XAMPP
-   - Buat database **db_ci4** di phpmyadmin.
-   - copy file .env dari tutorial https://www.notion.so/april-ns/Codeigniter4-Migration-dan-Seeding-045ffe5f44904e5c88633b2deae724d2
-
-4. **Jalankan migrasi database**
-   ```bash
-   php spark migrate
-   ```
-5. **Seeder data**
-   ```bash
-   php spark db:seed ProductSeeder
-   ```
-   ```bash
-   php spark db:seed UserSeeder
-   ```
-6. **Jalankan server**
-   ```bash
-   php spark serve
-   ```
-7. **Akses aplikasi**
-   Buka browser dan akses `http://localhost:8080` untuk melihat aplikasi.
-
-## Struktur Proyek
-
-Proyek menggunakan struktur MVC CodeIgniter 4:
-
-- app/Controllers - Logika aplikasi dan penanganan request
-  - AuthController.php - Autentikasi pengguna
-  - ProdukController.php - Manajemen produk
-  - TransaksiController.php - Proses transaksi
-- app/Models - Model untuk interaksi database
-  - ProductModel.php - Model produk
-  - UserModel.php - Model pengguna
-- app/Views - Template dan komponen UI
-  - v_produk.php - Tampilan produk
-  - v_keranjang.php - Halaman keranjang
-- public/img - Gambar produk dan aset
-- public/NiceAdmin - Template admin

@@ -17,7 +17,11 @@ if (session()->getFlashData('success')) {
         <tr>
             <th scope="col">Nama</th>
             <th scope="col">Foto</th>
-            <th scope="col">Harga</th>
+            <!-- <th scope="col">Harga</th> -->
+            <th scope="col">Harga Asli</th>
+            <th scope="col">Diskon</th>
+            <th scope="col">Harga Akhir</th>
+
             <th scope="col">Jumlah</th>
             <th scope="col">Subtotal</th>
             <th scope="col">Aksi</th>
@@ -32,10 +36,17 @@ if (session()->getFlashData('success')) {
         <tr>
             <td><?php echo $item['name'] ?></td>
             <td><img src="<?php echo base_url() . "img/" . $item['options']['foto'] ?>" width="100px"></td>
+            <td><?php echo number_to_currency($item['options']['harga_asli'], 'IDR') ?></td>
+            <td><?php echo number_to_currency($item['options']['diskon'], 'IDR') ?></td>
             <td><?php echo number_to_currency($item['price'], 'IDR') ?></td>
-            <td><input type="number" min="1" name="qty<?php echo $i++ ?>" class="form-control"
-                    value="<?php echo $item['qty'] ?>"></td>
-            <td><?php echo number_to_currency($item['subtotal'], 'IDR') ?></td>
+
+            <td>
+
+                <input type="number" min="1" name="qty<?php echo $i++ ?>" class="form-control"
+                    value="<?php echo $item['qty'] ?>">
+            </td>
+            <td><?= number_to_currency($item['subtotal'], 'IDR') ?></td>
+
             <td>
                 <a href="<?php echo base_url('keranjang/delete/' . $item['rowid'] . '') ?>" class="btn btn-danger"><i
                         class="bi bi-trash"></i></a>

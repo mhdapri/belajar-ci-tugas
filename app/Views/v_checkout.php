@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-lg-6">
         <!-- Vertical Form -->
-        <?= form_open('buy', 'class="row g-3"') ?>
+        <?= form_open('/buy', 'class="row g-3"') ?>
         <?= form_hidden('username', session()->get('username')) ?>
         <?= form_input(['type' => 'hidden', 'name' => 'total_harga', 'id' => 'total_harga', 'value' => '']) ?>
         <div class="col-12">

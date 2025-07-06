@@ -1,5 +1,7 @@
  <!-- ======= Header ======= -->
  <header id="header" class="header fixed-top d-flex align-items-center">
+
+
      <div class="d-flex align-items-center justify-content-between">
          <a href="index.html" class="logo d-flex align-items-center">
              <img src="<?= base_url()?>NiceAdmin/assets/img/logo.png" alt="" />
@@ -9,16 +11,25 @@
      </div>
      <!-- End Logo -->
 
-     <div class="search-bar">
-         <form class="search-form d-flex align-items-center" method="POST" action="#">
-             <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
-             <button type="submit" title="Search">
-                 <i class="bi bi-search"></i>
-             </button>
-         </form>
-     </div>
-     <!-- End Search Bar -->
+     <div class="d-flex align-items-center justify-content-between">
 
+         <div class="search-bar">
+             <form class="search-form d-flex align-items-center" method="POST" action="#">
+                 <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
+                 <button type="submit" title="Search">
+                     <i class="bi bi-search"></i>
+                 </button>
+             </form>
+         </div>
+         <!-- End Search Bar -->
+         <!-- diskon hari ini -->
+         <?php if (session()->has('diskon_nominal')): ?>
+         <div class="mx-auto text-center bg-success text-white py-1 px-3" style=" border-radius: 10px;">
+             Hari Ini ada diskon: Rp<?= number_format(session('diskon_nominal'), 0, ',', '.')  ?> per item
+         </div>
+         <?php endif; ?>
+         <!-- end diskon hari ini -->
+     </div>
      <nav class="header-nav ms-auto">
          <ul class="d-flex align-items-center">
              <li class="nav-item d-block d-lg-none">

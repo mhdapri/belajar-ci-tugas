@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\ProductModel;
 use App\Models\TransactionDetailModel;
 use App\Models\TransactionModel; 
+use App\Models\DiskonModel;
 
 class Home extends BaseController
 {
@@ -25,6 +26,18 @@ class Home extends BaseController
     {
         $product = $this->product->findAll();
         $data['product'] = $product;
+        // Tambahan: Cek apakah ada diskon hari ini
+        $diskonModel = new DiskonModel();
+        $diskonAktif = $diskonModel->where('tanggal', date('Y-m-d'))->first();
+
+        if ($diskonAktif) {
+            session()->set('diskon', [
+                'tanggal' => $diskonAktif['tanggal'],
+                'nominal' => $diskonAktif['nominal'],
+            ]);
+        } else {
+            session()->remove('diskon');
+        }
         return view('v_home', $data);
     }
 

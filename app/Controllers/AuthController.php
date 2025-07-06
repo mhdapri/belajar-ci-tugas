@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
 use App\Models\UserModel;
+use App\Models\DiskonModel;
 
 class AuthController extends BaseController
 {
@@ -31,7 +32,11 @@ class AuthController extends BaseController
                 $password = $this->request->getVar('password');
     
                 $dataUser = $this->user->where(['username' => $username])->first(); //pasw 1234567
-    
+
+                $diskonModel = new \App\Models\DiskonModel(); // ← Buat objek model diskon
+                $today = date('Y-m-d');  
+                $diskon = $diskonModel->where('tanggal', $today)->first(); // ← Query diskon hari ini
+
                 if ($dataUser) {
                     if (password_verify($password, $dataUser['password'])) {
                         session()->set([
@@ -39,7 +44,11 @@ class AuthController extends BaseController
                             'role' => $dataUser['role'],
                             'isLoggedIn' => TRUE
                         ]);
-    
+                        // ✅ Jika diskon ditemukan, tambahkan ke session
+                        if ($diskon) {
+                            $session['diskon_nominal'] = $diskon['nominal'];
+                        }
+                        session()->set($session);
                         return redirect()->to(base_url('/'));
                     } else {
                         session()->setFlashdata('failed', 'Kombinasi Username & Password Salah');
